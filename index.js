@@ -1,14 +1,14 @@
 const app = require("express")();
 const path = require("path");
-
+require("dotenv").config();
 const cors = require("cors");
 
 const shortid = require("shortid");
 const Razorpay = require("razorpay");
 
 const razorpay = new Razorpay({
-  key_id: "keyid",
-  key_secret: "secret",
+  key_id: process.env.KEY_ID,
+  key_secret: process.env.KEY_SECRET,
 });
 
 app.use(cors());
@@ -20,7 +20,7 @@ app.get("/logo.jpg", (req, res) => {
 
 app.post("/razorpay", async (req, res) => {
   const payment_capture = 1;
-  const amount = 499;
+  const amount = 1;
   const currency = "INR";
 
   const options = {
@@ -43,6 +43,6 @@ app.post("/razorpay", async (req, res) => {
   }
 });
 
-app.listen(1337, () => {
+app.listen(process.env.PORT || 1337, () => {
   console.log("Backend running at localhost:1337");
 });
